@@ -22,10 +22,16 @@ rm ENCFF845EEJ.bed
 
 bedtools getfasta -fi whole_genome38.fa -bed FMR1_peaks.bed  -fo FMR1_sequences.fa.out
 
-# convert excel file to csv table
+# convert transite motif excel file to csv table to read into subsequent script
 Rscript convert_xlsx.R
 
-######################################################                                                                                                       #### Get IGF2BP2  fasta sequences from CLIP peaks ####                                                                                                       ######################################################
+# script that searches for RBP motif in CLIP-seq data
+Rscript find_kmers_CLIP.R FMR1_sequences.fa.out
+
+######################################################                                                                                  
+#### Get IGF2BP2  fasta sequences from CLIP peaks ####                                                                                              
+######################################################
+
 
 cat ENCFF082VUD.bed ENCFF988HSD.bed > IGF2BP2_peaks.bed
 rm ENCFF988HSD.bed
