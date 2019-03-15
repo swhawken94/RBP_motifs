@@ -1,23 +1,21 @@
+#############################################
+#### Map Transite kmers to CLIP-seq data ####
+#############################################
 
+args = commandArgs(trailingOnly=TRUE)
 
-kmers <- read.table("k-mers-table.txt", header = TRUE, sep = "\t")
-print(head(kmers))
+# read command line arguments
+if (length(args)==0) {
+     stop("At least one argument must be supplied (input file).n", call.=FALSE)
+} else {
+  args[2] = "out.txt"
+}
 
-hexamer_t <- gsub("U", "T",kmers$hexamer)
-print(head(hexamer_t))
+###################
+#### Functions ####
+###################
 
-kmers$hexamer_t <- hexamer_t
-print(head(kmers))
- 
-sequences <- read.table("FMR1_sequences.fa.out", header = TRUE, sep = "\t")
-print(head(sequences))
-
-odds <- seq(1,nrow(sequences),2)
-print(head(odds))
-
-sequences <- sequences[odds,]
-print(head(sequences))
-
+# Create random hexamer
 alphabet = c("A","G","C","T")
 
 createRandString<- function() {
@@ -25,22 +23,40 @@ createRandString<- function() {
   return(paste0(v,collapse = ""))
 }
 
+# Read in Transite motifs for all RNA binding proteins
+kmers <- read.table("k-mers-table.txt", header = TRUE, sep = "\t")
+print(head(kmers))
 
-rbps_seqs_idx <- which(kmers$rbps == "FMR1")
+# Substitute U's for T's to map back to CLIP-seq data
+hexamer_t <- gsub("U", "T",kmers$hexamer)
+print(head(hexamer_t))
+
+# Add the substituted hexamers back to the main kmer file
+kmers$hexamer_t <- hexamer_t
+print(head(kmers))
+ 
+# Read in CLIP-seq sequences for protein of interest
+sequences <- read.table(args[1], header = TRUE, sep = "\t")
+prot_name <- strsplit(args[1],"_")[[1]][1]
+
+odds <- seq(1,nrow(sequences),2)
+print(head(odds))
+
+sequences <- sequences[odds,]
+print(head(sequences))
+
+# Get hexamers for protein of interest
+rbps_seqs_idx <- which(kmers$rbps == prot_name)
 rbps_seqs <- kmers$hexamer_t[rbps_seqs_idx]
 print((rbps_seqs))
 
-rands <- c()
-for(i in 1:length(rbps_seqs)){
-      rands <- c(rands, createRandString())
-}
-
-print(rands)
+#######################################################
+#### Search for RBP hexamers in CLIP-seq sequences ####
+#######################################################
 
 count <- 0
 kmer <- c()
 seq <- c()
-rand_count <- 0
 for(i in 1:length(sequences)){
       for( j in 1:length(rbps_seqs)){
       	   if ((grepl(tolower(rbps_seqs[j]),tolower(sequences[i]))) == TRUE){
@@ -48,15 +64,44 @@ for(i in 1:length(sequences)){
 	      kmer <- c(kmer, toupper(rbps_seqs[j]))
 	      seq <- c(seq, toupper(sequences[i]))    	      
 	   }
-	  if ((grepl(tolower(rands[j]),tolower(sequences[i]))) == TRUE){
-              rand_count = rand_count + 1
-           } 
-	   
-	   }
+	}
 }
 
+# create table with hexamers and corresponding CLIP-seq sequence
 data <- data.frame(kmer, seq)
 print(count)
-print(rand_count)
 print(length(sequences))
 print(head(data))
+
+##########################################################
+#### Search for	random hexamers in CLIP-seq sequences ####
+##########################################################
+
+random_data <- c()
+for(m in 1:100){
+      rand_count <- 0
+      rands <- c()
+      for(l in 1:length(rbps_seqs)){
+      	    rands <- c(rands, createRandString())
+	}
+print(rands)
+	for(i in 1:length(sequences)){
+      	  for( j in 1:length(rands)){
+	     if ((grepl(tolower(rands[j]),tolower(sequences[i]))) == TRUE){
+              rand_count = rand_count + 1
+              }
+      	   }
+	}
+	print(m)
+	random_data <- c(random_data, rand_count)
+	print(rand_count)
+}
+
+# Histogram of random data
+jpeg("hist_random_FMR1_abline.jpeg")
+hist(random_data, breaks = 20)
+abline(v=count,col="red")
+dev.off()
+
+# write a file with RBP hexamer and CLIP-seq sequence
+write.csv(data, file = "FMR1_hexamer_CLIP-seq.csv", quote = FALSE, row.names = FALSE, sep = "\t")
