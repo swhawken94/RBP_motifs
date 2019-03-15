@@ -84,7 +84,7 @@ for(m in 1:100){
       for(l in 1:length(rbps_seqs)){
       	    rands <- c(rands, createRandString())
 	}
-print(rands)
+	print(rands)
 	for(i in 1:length(sequences)){
       	  for( j in 1:length(rands)){
 	     if ((grepl(tolower(rands[j]),tolower(sequences[i]))) == TRUE){
