@@ -43,7 +43,16 @@ odds <- seq(1,nrow(sequences),2)
 print(head(odds))
 
 sequences <- sequences[odds,]
+file_name <- paste0(prot_name, "_sequences.txt", collapse = " ")
+write.table(sequences,file = file_name, sep = "\t", row.names = FALSE, quote = FALSE, col.names = FALSE)
 print(head(sequences))
+print(length(sequences))
+hexamer_count = 0
+for(i in 1:length(sequences)){
+     num_hexamers = length(strsplit(as.character(sequences[i]),"")[[1]]) - 7
+     hexamer_count = hexamer_count + num_hexamers
+}
+print(hexamer_count)
 
 # Get hexamers for protein of interest
 rbps_seqs_idx <- which(kmers$rbps == prot_name)
@@ -59,7 +68,7 @@ kmer <- c()
 seq <- c()
 for(i in 1:length(sequences)){
       for( j in 1:length(rbps_seqs)){
-      	   if ((grepl(tolower(rbps_seqs[j]),tolower(sequences[i]))) == TRUE){
+      	   if ((grepl(tolower(as.character(rbps_seqs[j])),tolower(as.character(sequences[i])))) == TRUE){
 	      count = count + 1
 	      kmer <- c(kmer, toupper(rbps_seqs[j]))
 	      seq <- c(seq, toupper(sequences[i]))    	      
@@ -84,7 +93,7 @@ for(m in 1:100){
       for(l in 1:length(rbps_seqs)){
       	    rands <- c(rands, createRandString())
 	}
-	print(rands)
+print(rands)
 	for(i in 1:length(sequences)){
       	  for( j in 1:length(rands)){
 	     if ((grepl(tolower(rands[j]),tolower(sequences[i]))) == TRUE){
