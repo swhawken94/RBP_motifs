@@ -152,7 +152,8 @@ bedtools getfasta -fi whole_genome38.fa -bed SRSF9_peaks.bed  -fo SRSF9_sequence
 Rscript find_kmers_CLIP.R SRSF9_sequences.fa.out
 
 
-######################################################                                                                                  #### Get TARDBP fasta sequences from CLIP peaks ####                                                                                   
+######################################################                                                                                 
+####   Get TARDBP fasta sequences from CLIP peaks ####                                                                                   
 ######################################################
 
 cat ENCFF037TVC.bed ENCFF606RXB.bed ENCFF669TNM.bed > TARDBP_peaks.bed
@@ -165,7 +166,8 @@ bedtools getfasta -fi whole_genome38.fa -bed TARDBP_peaks.bed  -fo TARDBP_sequen
 Rscript find_kmers_CLIP.R TARDBP_sequences.fa.out
 
 ###################################################### 
-### Get TIA1 fasta sequences from CLIP peaks ####                                                                                        ######################################################
+###    Get TIA1 fasta sequences from CLIP peaks   ####                                                                                        
+######################################################
 
 cat ENCFF378HWC.bed ENCFF759KCD.bed ENCFF856EHA.bed > TIA1_peaks.bed
 rm ENCFF856EHA.bed
