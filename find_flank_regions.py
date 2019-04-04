@@ -20,7 +20,7 @@ def get_flank(kmers, seqs):
             flank_seq_right = seqs[i][idx+hex_len:idx+flank_right]
         flank_left_list.append(flank_seq_left)
         flank_right_list.append(flank_seq_right)
-        #hamming_for_bp(flank_seq_left, flank_seq_right)
+        hamming_for_bp(flank_seq_left, flank_seq_right)
     
     return [flank_left_list, flank_right_list]
 
