@@ -55,7 +55,9 @@ for(i in 1:length(sequences)){
 print(hexamer_count)
 
 # Get hexamers for protein of interest
-rbps_seqs_idx <- which(kmers$rbps == prot_name)
+#rbps_seqs_idx <- which(kmers$rbps == prot_name)
+
+rbps_seqs_idx <- which(grepl(tolower(prot_name), tolower(as.character(kmers$rbps))))
 rbps_seqs <- kmers$hexamer_t[rbps_seqs_idx]
 print((rbps_seqs))
 
@@ -82,6 +84,10 @@ print(count)
 print(length(sequences))
 print(head(data))
 
+# write a file with RBP hexamer and CLIP-seq sequence
+csv_name <- paste0(prot_name, "_hexamer_CLIP-seq.csv", collapse = " ")
+write.table(data, file = csv_name, quote = FALSE, row.names = FALSE, sep = "\t")
+
 ##########################################################
 #### Search for	random hexamers in CLIP-seq sequences ####
 ##########################################################
@@ -107,10 +113,9 @@ print(rands)
 }
 
 # Histogram of random data
-jpeg("hist_random_FMR1_abline.jpeg")
+hist_name <- paste0(prot_name, "hist_random_abline.jpeg", collapse = " ")
+jpeg(hist_name)
 hist(random_data, breaks = 20)
 abline(v=count,col="red")
 dev.off()
 
-# write a file with RBP hexamer and CLIP-seq sequence
-write.csv(data, file = "FMR1_hexamer_CLIP-seq.csv", quote = FALSE, row.names = FALSE, sep = "\t")
