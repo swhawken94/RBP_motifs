@@ -69,7 +69,8 @@ bedtools getfasta -fi whole_genome38.fa -bed KHDRBS1_peaks.bed  -fo KHDRBS1_sequ
 
 Rscript find_kmers_CLIP.R KHDRBS1_sequences.fa.out
 
-######################################################                                                                                    #### Get LIN28B fasta sequences from CLIP peaks ####                                                                                      
+######################################################                       
+####  Get LIN28B fasta sequences from CLIP peaks  ####                                                                                      
 ######################################################
 
 cat ENCFF246BGL.bed ENCFF341XMP.bed ENCFF909VPB.bed > LIN28B_peaks.bed
@@ -83,7 +84,7 @@ bedtools getfasta -fi whole_genome38.fa -bed LIN28B_peaks.bed  -fo LIN28B_sequen
 Rscript find_kmers_CLIP.R LIN28B_sequences.fa.out
 
 ######################################################                                                                     
-#### Get PCBP2 fasta sequences from CLIP peaks ####                                                                      
+####  Get PCBP2 fasta sequences from CLIP peaks   ####                                                                      
 ######################################################  
 
 cat ENCFF454MWQ.bed ENCFF514GGZ.bed ENCFF642GNE.bed > PCBP2_peaks.bed
@@ -97,7 +98,7 @@ bedtools getfasta -fi whole_genome38.fa -bed PCBP2_peaks.bed  -fo PCBP2_sequence
 Rscript find_kmers_CLIP.R PCBP2_sequences.fa.out
 
 ######################################################                                                                     
-#### Get PTBP1 fasta sequences from CLIP peaks ####                                                                      
+####   Get PTBP1 fasta sequences from CLIP peaks  ####                                                                      
 ######################################################  
 
 cat ENCFF594PWG.bed ENCFF894KLP.bed ENCFF907HNN.bed > PTBP1_peaks.bed
@@ -110,7 +111,7 @@ bedtools getfasta -fi whole_genome38.fa -bed PTBP1_peaks.bed  -fo PTBP1_sequence
 Rscript find_kmers_CLIP.R PTBP1_sequences.fa.out
 
 ######################################################                                                                                 
-#### Get RBM5 fasta sequences from CLIP peaks ####                                                                                      
+####    Get RBM5 fasta sequences from CLIP peaks  ####                                                                                      
 ###################################################### 
 
 cat ENCFF176RGG.bed ENCFF927KRA.bed ENCFF998ACW.bed > RBM5_peaks.bed
@@ -122,7 +123,9 @@ bedtools getfasta -fi whole_genome38.fa -bed RBM5_peaks.bed  -fo RBM5_sequences.
 
 Rscript find_kmers_CLIP.R RBM5_sequences.fa.out
 
-######################################################                                                                                    #### Get SF3B4 fasta sequences from CLIP peaks ####                                                                                        ######################################################                                                                                   
+######################################################                                                                                   
+####  Get SF3B4 fasta sequences from CLIP peaks   ####                                                                                       
+######################################################                                                                                   
 
 
 cat ENCFF073IJF.bed ENCFF232FWK.bed ENCFF744CKU.bed > SF3B4_peaks.bed
@@ -134,7 +137,8 @@ bedtools getfasta -fi whole_genome38.fa -bed SF3B4_peaks.bed  -fo SF3B4_sequence
 
 Rscript find_kmers_CLIP.R SF3B4_sequences.fa.out
 
-######################################################                                                                                    #### Get SRSF9 fasta sequences from CLIP peaks ####                                                                                      
+######################################################                                                                                   
+####  Get SRSF9 fasta sequences from CLIP peaks   ####                                                                                      
 ###################################################### 
 
 cat ENCFF327JJE.bed ENCFF432ASF.bed ENCFF765PIF.bed > SRSF9_peaks.bed
